@@ -47,14 +47,13 @@ box-border w-full min-h-[350px] px-10 lg:px-28 py-12 bg-[#392214] items-center f
       </div>
       <div className="bg-[#f7f6f1] pt-20 p-12 flex flex-col lg:flex-row flex-wrap justify-between gap-5">
         {project?.renders.map((renderSrc, index) => (
-          <Image
+          <img
             className="w-full lg:w-[calc(50%-20px)]"
             key={index}
             src={renderSrc}
             alt="Avatar"
             width={100}
             height={20}
-            priority
           />
         ))}
       </div>
