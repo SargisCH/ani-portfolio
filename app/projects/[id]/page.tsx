@@ -1,5 +1,6 @@
 import { getProjectById } from "@/lib/actions";
 import Image from "next/image";
+export const dynamic = "force-dynamic";
 
 export default async function Project({ params }: { params: { id: string } }) {
   const { id } = await params;

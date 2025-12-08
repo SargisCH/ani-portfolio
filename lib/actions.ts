@@ -25,7 +25,7 @@ export const getProjectById = async (id: string) => {
       date: string;
       tools: string;
     }>(`SELECT * FROM projects WHERE "id"='${id}'`);
-    return { ...rows[0], renders: rows[0].thumbs };
+    return { ...rows[0], renders: rows[0].renders };
   } catch (error) {
     console.error("Error fetching users:", error);
   }
