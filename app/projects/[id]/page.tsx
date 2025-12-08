@@ -4,7 +4,6 @@ import Image from "next/image";
 export default async function Project({ params }: { params: { id: string } }) {
   const { id } = await params;
   const project = await getProjectById(id);
-  console.log("project", project);
   return (
     <main>
       <div
