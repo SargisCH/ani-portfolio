@@ -16,13 +16,13 @@ export default async function Project({ params }: { params: { id: string } }) {
         </h1>
 
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
-          <div className="w-full lg:w-[53%]">
+          <div className="w-full lg:w-2/3">
             <div className="text-md lg:text-lg leading-relaxed">
               {project?.description}
             </div>
           </div>
 
-          <div className="w-full lg:w-[37%] text-lg lg:text-xl space-y-4">
+          <div className="w-full lg:w-1/3 text-lg lg:text-xl space-y-4">
             <div className="flex justify-between border-b border-white/20 pb-2">
               <span className="font-semibold opacity-80">Date</span>
               <span>{project?.date}</span>
