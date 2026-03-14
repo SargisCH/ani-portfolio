@@ -8,44 +8,50 @@ export default async function Project({ params }: { params: { id: string } }) {
   return (
     <main>
       <div
-        className=" 
-box-border w-full min-h-[350px] px-10 lg:px-28 py-12 bg-[#392214] items-center flex flex-col lg:flex-row lg:justify-between justify-center"
+        className="box-border w-full min-h-[350px] px-10 lg:px-28 py-12 bg-[#392214] flex flex-col text-white"
         id="ind-about"
       >
-        <div className="w-[90%] lg:w-[50%] text-white">
-          <h1 className="text-4xl">{project?.title}</h1>
-          <div className="w-full mt-6 text-md lg:text-lg">
-            {project?.description}
+        <h1 className="text-4xl mb-10 text-center lg:text-left">
+          {project?.title}
+        </h1>
+
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+          <div className="w-full lg:w-[55%]">
+            <div className="text-md lg:text-lg leading-relaxed">
+              {project?.description}
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[35%] text-lg lg:text-xl space-y-4">
+            <div className="flex justify-between border-b border-white/20 pb-2">
+              <span className="font-semibold opacity-80">Date</span>
+              <span>{project?.date}</span>
+            </div>
+
+            {project?.tools && (
+              <div className="flex justify-between border-b border-white/20 pb-2">
+                <span className="font-semibold opacity-80">Tools used</span>
+                <span className="text-right ml-4">{project.tools}</span>
+              </div>
+            )}
+
+            {project?.location && (
+              <div className="flex justify-between border-b border-white/20 pb-2">
+                <span className="font-semibold opacity-80">Location</span>
+                <span>{project.location}</span>
+              </div>
+            )}
           </div>
         </div>
-        <div className="w-[90%] lg:w-[35%] mt-20 text-2xl text-white">
-          <p className="justify-between flex">
-            <span>Date</span>
-            <span>{project?.date}</span>
-          </p>
-          {project?.tools && (
-            <p className="justify-between flex">
-              <span>Tools used</span>
-              <span>{project.tools}</span>
-            </p>
-          )}
-          {project?.location && (
-            <p className="justify-between flex">
-              <span>Location</span>
-              <span>{project.location}</span>
-            </p>
-          )}
-        </div>
       </div>
-      <div className="bg-[#f7f6f1] pt-20 p-12 flex flex-col lg:flex-row flex-wrap justify-between gap-5">
+
+      <div className="bg-[#f7f6f1] pt-20 p-6 lg:p-12 flex flex-col lg:flex-row flex-wrap justify-between gap-10">
         {project?.renders.map((renderSrc, index) => (
           <img
-            className="w-full lg:w-[calc(50%-20px)]"
+            className="w-full lg:w-[calc(50%-20px)] h-auto object-cover rounded-lg shadow-sm"
             key={index}
             src={renderSrc}
-            alt="Avatar"
-            width={100}
-            height={20}
+            alt={`${project?.title} render ${index + 1}`}
           />
         ))}
       </div>
