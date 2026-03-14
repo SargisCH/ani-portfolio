@@ -60,7 +60,7 @@ export default async function Home() {
       </div>
       <div className="min-h-[850px] bg-[#f7f6f1] flex flex-col">
         {projects
-          .sort((a, b) => a - b)
+          .sort((a, b) => a.sortIndex - b.sortIndex)
           .map((project) => (
             <div className="mt-6 px-16  md:px-28 lg:px-22 " key={project.id}>
               <h2 className="text-4xl text-[#392214]">{project.title}</h2>

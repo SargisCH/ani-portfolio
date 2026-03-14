@@ -6,6 +6,7 @@ export const getProjects = async () => {
       title: string;
       id: string;
       thumbs: string[];
+      sortIndex: number;
     }>("SELECT title, thumbs, id FROM projects");
     return rows;
   } catch (error) {
