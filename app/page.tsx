@@ -22,7 +22,7 @@ export default async function Home() {
                 height={20}
                 priority
               />
-              <span className="mt-4 text-white ">
+              <span className="mt-4 text-white text-xl ">
                 <div>Ani Stepanyan</div>
                 <div>Interior designer</div>
               </span>

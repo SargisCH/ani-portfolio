@@ -15,15 +15,7 @@ box-border w-full min-h-[350px] px-10 lg:px-28 py-12 bg-[#392214] items-center f
         <div className="w-[90%] lg:w-[50%] text-white">
           <h1 className="text-4xl">{project?.title}</h1>
           <div className="w-full mt-6 text-md lg:text-lg">
-            This apartment reflects a refined retro-inspired style blended with
-            modern comfort. The living room features an artistic mural wall,
-            arched shelving, neutral furniture, and a traditional Armenian rug
-            that adds cultural depth. Large arched windows bring in abundant
-            natural light and highlight the elegant proportions of the space.
-            The kitchen continues the theme with dark wood cabinetry, textured
-            finishes, and a retro-style refrigerator and the bathroom offers a
-            timeless retreat with a white bathtub, brass fixtures, and soft
-            drapery.
+            {project?.description}
           </div>
         </div>
         <div className="w-[90%] lg:w-[35%] mt-20 text-2xl text-white">
