@@ -141,11 +141,11 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
           onClick={() => closeSlider()}
         >
           <div
-            className="relative w-full h-full sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-hidden"
+            className="relative w-full h-[100dvh] sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 z-10 text-[#392214] font-bold text-2xl leading-none hover:opacity-70"
+              className="absolute top-3 right-3 z-10 text-[#392214] font-bold text-xl leading-none hover:opacity-70 bg-[#f7f6f1]/80 rounded-full w-8 h-8 flex items-center justify-center"
               onClick={() => closeSlider()}
             >
               ✕
@@ -174,7 +174,7 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
               >
                 {/* Slide 0 — description */}
                 <SwiperSlide>
-                  <div className="h-full overflow-y-auto flex flex-col justify-center"><div className="px-16 py-14 flex flex-col items-center text-center">
+                  <div className="h-full overflow-y-auto flex flex-col justify-center"><div className="px-6 py-10 sm:px-16 sm:py-14 flex flex-col items-center text-center">
                     <h2 className="text-3xl font-bold text-[#392214] mb-5">
                       {activeProject.title}
                     </h2>
