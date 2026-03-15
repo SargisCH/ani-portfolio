@@ -1,3 +1,4 @@
+"use server";
 import pool from "./db";
 
 export const getProjects = async () => {
