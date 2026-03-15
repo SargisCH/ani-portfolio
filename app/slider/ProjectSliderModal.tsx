@@ -205,7 +205,7 @@ export default function ProjectSliderModal({
               >
                 {/* Slide 0 — description */}
                 <SwiperSlide>
-                  <div className="h-full overflow-y-auto flex flex-col justify-center">
+                  <div className="h-full overflow-y-auto flex flex-col justify-center bg-black/60">
                     <div className="px-6 py-10 sm:px-16 sm:py-14 flex flex-col items-center text-center">
                       <h2 className="text-3xl font-bold text-white mb-5">
                         {activeProject.title}
