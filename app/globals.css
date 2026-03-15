@@ -19,6 +19,13 @@
   }
 }
 
+@media (max-width: 639px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
