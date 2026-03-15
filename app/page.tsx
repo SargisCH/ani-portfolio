@@ -58,7 +58,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="min-h-[850px] bg-[#f7f6f1] flex flex-col">
+      <div className="min-h-[850px] bg-[#f7f6f1] flex flex-col pb-3">
         {projects
           .sort((a, b) => a.sortIndex - b.sortIndex)
           .map((project) => (

@@ -30,27 +30,47 @@ const PRELOAD_AHEAD = 2;
 
 type LoadSignal = { aborted: boolean; currentImg: HTMLImageElement | null };
 
-function preloadImage(src: string, cache: Set<string>, signal: LoadSignal): Promise<void> {
+function preloadImage(
+  src: string,
+  cache: Set<string>,
+  signal: LoadSignal,
+): Promise<void> {
   if (signal.aborted || cache.has(src)) return Promise.resolve();
   cache.add(src);
   return new Promise((resolve) => {
     const img = new window.Image();
     signal.currentImg = img;
-    img.onload = () => { signal.currentImg = null; resolve(); };
-    img.onerror = () => { signal.currentImg = null; resolve(); };
+    img.onload = () => {
+      signal.currentImg = null;
+      resolve();
+    };
+    img.onerror = () => {
+      signal.currentImg = null;
+      resolve();
+    };
     img.src = src;
   });
 }
 
-async function preloadSequential(srcs: string[], cache: Set<string>, signal: LoadSignal) {
+async function preloadSequential(
+  srcs: string[],
+  cache: Set<string>,
+  signal: LoadSignal,
+) {
   for (const src of srcs) {
     if (signal.aborted) break;
     await preloadImage(src, cache, signal);
   }
 }
 
-export default function ProjectSliderModal({ projects }: { projects: Project[] }) {
-  const [activeProject, setActiveProject] = useState<ProjectDetail | null>(null);
+export default function ProjectSliderModal({
+  projects,
+}: {
+  projects: Project[];
+}) {
+  const [activeProject, setActiveProject] = useState<ProjectDetail | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
   const [loadedUpTo, setLoadedUpTo] = useState(PRELOAD_AHEAD);
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
@@ -65,7 +85,11 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
     const data = await getProjectById(id);
     if (data) {
       setActiveProject(data);
-      preloadSequential(data.renders.slice(0, PRELOAD_AHEAD), preloadCache.current, loadSignal.current);
+      preloadSequential(
+        data.renders.slice(0, PRELOAD_AHEAD),
+        preloadCache.current,
+        loadSignal.current,
+      );
     }
     setLoading(false);
   };
@@ -86,20 +110,23 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
     const onPopState = () => closeSlider(true);
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProject, loading]);
 
   // realIndex 0 = description, realIndex N = renders[N-1]
   // so next 2 renders to preload are renders[realIndex] and renders[realIndex+1]
   const handleSlideChange = (realIndex: number, renders: string[]) => {
     setLoadedUpTo((prev) => Math.max(prev, realIndex + PRELOAD_AHEAD));
-    const toPreload = Array.from({ length: PRELOAD_AHEAD }, (_, i) => renders[realIndex + i]).filter(Boolean) as string[];
+    const toPreload = Array.from(
+      { length: PRELOAD_AHEAD },
+      (_, i) => renders[realIndex + i],
+    ).filter(Boolean) as string[];
     preloadSequential(toPreload, preloadCache.current, loadSignal.current);
   };
 
   return (
     <>
-      <div className="min-h-[850px] bg-[#f7f6f1] flex flex-col">
+      <div className="min-h-[850px] bg-[#f7f6f1] flex flex-col pb-3">
         {projects
           .sort((a, b) => a.sortIndex - b.sortIndex)
           .map((project) => (
@@ -137,11 +164,11 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
       {/* Modal */}
       {(loading || activeProject) && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+          className="fixed inset-0 z-50 sm:flex sm:items-center sm:justify-center bg-black/80"
           onClick={() => closeSlider()}
         >
           <div
-            className="relative w-full h-[100dvh] sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-hidden"
+            className="relative w-full h-[100dvh] sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-x-hidden overflow-y-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -163,7 +190,9 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
                 pagination={{ clickable: true }}
                 navigation
                 loop
-                onSlideChange={(swiper) => handleSlideChange(swiper.realIndex, activeProject.renders)}
+                onSlideChange={(swiper) =>
+                  handleSlideChange(swiper.realIndex, activeProject.renders)
+                }
                 className="h-full"
                 style={
                   {
@@ -174,28 +203,36 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
               >
                 {/* Slide 0 — description */}
                 <SwiperSlide>
-                  <div className="h-full overflow-y-auto flex flex-col justify-center"><div className="px-6 py-10 sm:px-16 sm:py-14 flex flex-col items-center text-center">
-                    <h2 className="text-3xl font-bold text-[#392214] mb-5">
-                      {activeProject.title}
-                    </h2>
-                    <p className="text-[#392214] text-base leading-relaxed mb-8 whitespace-pre-line">
-                      {activeProject.description}
-                    </p>
-                    <div className="border-t border-[#392214]/30 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-[#392214] w-full">
-                      <div>
-                        <div className="font-bold text-xs uppercase tracking-wide mb-1">Date</div>
-                        <div>{activeProject.date}</div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-xs uppercase tracking-wide mb-1">Location</div>
-                        <div>{activeProject.location}</div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-xs uppercase tracking-wide mb-1">Tools</div>
-                        <div>{activeProject.tools}</div>
+                  <div className="h-full overflow-y-auto flex flex-col justify-center">
+                    <div className="px-6 py-10 sm:px-16 sm:py-14 flex flex-col items-center text-center">
+                      <h2 className="text-3xl font-bold text-[#392214] mb-5">
+                        {activeProject.title}
+                      </h2>
+                      <p className="text-[#392214] text-base leading-relaxed mb-8 whitespace-pre-line">
+                        {activeProject.description}
+                      </p>
+                      <div className="border-t border-[#392214]/30 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-[#392214] w-full">
+                        <div>
+                          <div className="font-bold text-xs uppercase tracking-wide mb-1">
+                            Date
+                          </div>
+                          <div>{activeProject.date}</div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs uppercase tracking-wide mb-1">
+                            Location
+                          </div>
+                          <div>{activeProject.location}</div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs uppercase tracking-wide mb-1">
+                            Tools
+                          </div>
+                          <div>{activeProject.tools}</div>
+                        </div>
                       </div>
                     </div>
-                  </div></div>
+                  </div>
                 </SwiperSlide>
 
                 {/* Render slides — only mount image if within loadedUpTo */}
