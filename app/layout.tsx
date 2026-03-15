@@ -27,7 +27,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <footer className="bg-[#392214] text-center p-2 text-white mt-10">
+        <footer className="bg-[#392214] text-center p-2 text-white">
           © 2025 Ani Stepanyan. All rights reserved.
         </footer>
       </body>
