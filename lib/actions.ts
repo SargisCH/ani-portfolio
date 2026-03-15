@@ -7,7 +7,7 @@ export const getProjects = async () => {
       id: string;
       thumbs: string[];
       sortIndex: number;
-    }>("SELECT title, thumbs, id, sortIndex FROM projects");
+    }>('SELECT title, thumbs, id, "sortIndex" FROM projects');
     return rows;
   } catch (error) {
     console.error("Error fetching users:", error);
