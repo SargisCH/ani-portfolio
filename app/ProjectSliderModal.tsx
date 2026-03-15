@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import { getProjectById } from "@/lib/actions";
@@ -179,8 +179,8 @@ export default function ProjectSliderModal({
             </button>
 
             {loading && (
-              <div className="flex items-center justify-center h-full text-[#392214] text-xl">
-                Loading…
+              <div className="flex flex-col items-center justify-center h-full gap-4">
+                <div className="w-10 h-10 rounded-full border-4 border-white/30 border-t-white animate-spin" />
               </div>
             )}
 
