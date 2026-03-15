@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import { getProjectById } from "@/lib/actions";
@@ -70,14 +70,24 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
     setLoading(false);
   };
 
-  const closeSlider = () => {
+  const closeSlider = (fromPopState = false) => {
     loadSignal.current.aborted = true;
     if (loadSignal.current.currentImg) {
       loadSignal.current.currentImg.src = "";
       loadSignal.current.currentImg = null;
     }
+    if (!fromPopState) window.history.back();
     setActiveProject(null);
   };
+
+  useEffect(() => {
+    if (!activeProject && !loading) return;
+    window.history.pushState({ slider: true }, "");
+    const onPopState = () => closeSlider(true);
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeProject, loading]);
 
   // realIndex 0 = description, realIndex N = renders[N-1]
   // so next 2 renders to preload are renders[realIndex] and renders[realIndex+1]
@@ -128,15 +138,15 @@ export default function ProjectSliderModal({ projects }: { projects: Project[] }
       {(loading || activeProject) && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
-          onClick={closeSlider}
+          onClick={() => closeSlider()}
         >
           <div
-            className="relative w-full max-w-4xl h-[90vh] bg-[#f7f6f1] rounded-xl overflow-hidden"
+            className="relative w-full h-full sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className="absolute top-4 right-4 z-10 text-[#392214] font-bold text-2xl leading-none hover:opacity-70"
-              onClick={closeSlider}
+              onClick={() => closeSlider()}
             >
               ✕
             </button>
