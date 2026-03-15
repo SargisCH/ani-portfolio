@@ -168,11 +168,11 @@ export default function ProjectSliderModal({
           onClick={() => closeSlider()}
         >
           <div
-            className="relative w-full h-[100dvh] sm:max-w-4xl sm:h-[90vh] bg-[#f7f6f1] sm:rounded-xl overflow-x-hidden overflow-y-hidden"
+            className="relative w-full h-[100dvh] sm:max-w-4xl sm:h-[90vh] sm:rounded-xl overflow-x-hidden overflow-y-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-3 right-3 z-10 text-[#392214] font-bold text-xl leading-none hover:opacity-70 bg-[#f7f6f1]/80 rounded-full w-8 h-8 flex items-center justify-center"
+              className="absolute top-3 right-3 z-10 text-white font-bold text-xl leading-none hover:opacity-70 bg-black/30 rounded-full w-8 h-8 flex items-center justify-center"
               onClick={() => closeSlider()}
             >
               ✕
@@ -196,8 +196,10 @@ export default function ProjectSliderModal({
                 className="h-full"
                 style={
                   {
-                    "--swiper-pagination-color": "#392214",
-                    "--swiper-navigation-color": "#392214",
+                    "--swiper-pagination-color": "#ffffff",
+                    "--swiper-pagination-bullet-inactive-color": "#ffffff",
+                    "--swiper-pagination-bullet-inactive-opacity": "0.5",
+                    "--swiper-navigation-color": "#ffffff",
                   } as React.CSSProperties
                 }
               >
@@ -205,25 +207,29 @@ export default function ProjectSliderModal({
                 <SwiperSlide>
                   <div className="h-full overflow-y-auto flex flex-col justify-center">
                     <div className="px-6 py-10 sm:px-16 sm:py-14 flex flex-col items-center text-center">
-                      <h2 className="text-3xl font-bold text-[#392214] mb-5">
+                      <h2 className="text-3xl font-bold text-white mb-5">
                         {activeProject.title}
                       </h2>
-                      <p className="text-[#392214] text-base leading-relaxed mb-8 whitespace-pre-line">
+                      <p className="text-white/90 text-base leading-relaxed mb-8 whitespace-pre-line">
                         {activeProject.description}
                       </p>
-                      <div className="border-t border-[#392214]/30 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-[#392214] w-full">
-                        <div>
-                          <div className="font-bold text-xs uppercase tracking-wide mb-1">
-                            Date
+                      <div className="border-t border-white/30 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-white w-full">
+                        {activeProject.date && (
+                          <div>
+                            <div className="font-bold text-xs uppercase tracking-wide mb-1">
+                              Date
+                            </div>
+                            <div>{activeProject.date}</div>
                           </div>
-                          <div>{activeProject.date}</div>
-                        </div>
-                        <div>
-                          <div className="font-bold text-xs uppercase tracking-wide mb-1">
-                            Location
+                        )}
+                        {activeProject.location && (
+                          <div>
+                            <div className="font-bold text-xs uppercase tracking-wide mb-1">
+                              Location
+                            </div>
+                            <div>{activeProject.location}</div>
                           </div>
-                          <div>{activeProject.location}</div>
-                        </div>
+                        )}
                         <div>
                           <div className="font-bold text-xs uppercase tracking-wide mb-1">
                             Tools
@@ -241,7 +247,7 @@ export default function ProjectSliderModal({
                   const loaded = slideIndex <= loadedUpTo;
                   return (
                     <SwiperSlide key={index}>
-                      <div className="h-full flex items-center justify-center bg-[#f7f6f1]">
+                      <div className="h-full flex items-center justify-center">
                         {loaded ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
